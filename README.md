@@ -1,22 +1,36 @@
-# Cabinet Safiou Radji — site vitrine
+# Cabinet Safiou Radji — site vitrine (Next.js)
 
-Site statique (HTML / CSS / JS sans dépendance) du Cabinet Safiou Radji : conseil stratégique, finance, investissement et développement durable.
+Site corporate du Cabinet Safiou Radji : conseil stratégique, finance, investissement et développement durable. Application Next.js (App Router, TypeScript, React 19), bilingue FR / EN, sans base de données ni dépendance UI externe.
+
+## Démarrer en local
+
+```bash
+npm install
+npm run dev        # http://localhost:4100
+```
+
+Production :
+
+```bash
+npm run build
+npm start          # http://localhost:4100
+```
 
 ## Structure
 
-- `index.html` — structure de la page (une seule page, ancres de navigation)
-- `styles.css` — charte « ivoire + or + brun », typographies Marcellus / Hanken Grotesk
-- `main.js` — contenus bilingues FR / EN, rendu des listes, accordéon des expertises, formulaire
-- `assets/logo-csr.png` — logo officiel
+- `app/layout.tsx` — document HTML, métadonnées, polices Google (Marcellus / Hanken Grotesk), fournisseur de langue
+- `app/page.tsx` — assemblage des sections de la page unique
+- `app/globals.css` — charte « ivoire + or + brun » et responsive
+- `components/` — une section par composant (`Header`, `Hero`, `Cabinet`, `Expertises`, `Sectors`, `Founder`, `WhyUs`, `Resources`, `Contact`, `Footer`) et `LanguageProvider` (bascule FR / EN)
+- `lib/content.ts` — tous les textes et listes, en français et en anglais
+- `public/assets/logo-csr.png` — logo officiel
 
-## Lancer en local
+## Modifier le contenu
 
-Ouvrir `index.html` dans un navigateur, ou servir le dossier :
+Tous les textes sont dans `lib/content.ts` : l'objet `I18N` pour les libellés et paragraphes, l'objet `DATA` pour les listes (six domaines d'expertise issus de la plaquette « CSR – Domaines d'expertises », valeurs, secteurs, compétences, raisons, clients, portails).
 
-```
-python3 -m http.server 8000
-```
+## À compléter
 
-## Contenu
-
-Les six domaines d'expertise reprennent la plaquette « CSR – Domaines d'expertises ». Les textes se modifient dans `main.js` (objets `I18N` et `DATA`).
+- Photo du fondateur (`components/Founder.tsx`)
+- Coordonnées : siège, téléphone, e-mail (`components/Contact.tsx`)
+- Envoi réel du formulaire de contact (actuellement un état « envoyé » côté client)

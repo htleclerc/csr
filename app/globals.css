@@ -230,9 +230,10 @@ img { max-width: 100%; }
 .exp-item.open .exp-chevron { transform: rotate(45deg); }
 .exp-panel {
   padding: 4px 8px 20px 118px; max-width: 1050px;
-  display: none; flex-direction: column; gap: 22px;
+  display: flex; flex-direction: column; gap: 22px;
+  animation: csrFadeUp .35s ease both;
 }
-.exp-item.open .exp-panel { display: flex; animation: csrFadeUp .35s ease both; }
+.exp-panel[hidden] { display: none; }
 .exp-panel-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 48px; }
 .exp-panel-items .exp-line {
   font-size: 15.5px; font-weight: 300; line-height: 1.55; color: var(--muted);

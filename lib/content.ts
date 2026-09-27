@@ -1,13 +1,17 @@
 /* ============================================================
-   Cabinet Safiou Radji — logique du site
-   - Bilingue FR / EN (par défaut FR)
-   - Rendu des listes (valeurs, expertises, secteurs, etc.)
-   - Accordéon des expertises
-   - Formulaire de contact (état « envoyé »)
+   Cabinet Safiou Radji — contenus bilingues (FR / EN)
    ============================================================ */
 
-/* ---------- Contenu textuel ---------- */
-const I18N = {
+export type Lang = 'fr' | 'en';
+
+export type Expertise = { title: string; items: string[]; note?: string };
+export type Value = { name: string; desc: string };
+export type Reason = { title: string; desc: string };
+export type Portal = { roman: string; title: string; items: string[] };
+
+type ByLang<T> = Record<Lang, T>;
+
+export const I18N = {
   fr: {
     navCabinet: 'Le cabinet', navExpertises: 'Expertises', navSecteurs: 'Secteurs', navFondateur: 'Fondateur', navRessources: 'Ressources',
     heroKicker: 'Cabinet Safiou Radji',
@@ -72,10 +76,19 @@ const I18N = {
     formThanks: 'Thank you for your message', formThanksSub: 'We will get back to you shortly.',
     footerSlogan: '“Structuring today the organisations that will succeed tomorrow”',
   },
-};
+} satisfies ByLang<Record<string, string>>;
 
-/* ---------- Données par langue ---------- */
-const DATA = {
+export type I18nKey = keyof (typeof I18N)['fr'];
+
+export const DATA: {
+  expertises: ByLang<Expertise[]>;
+  values: ByLang<Value[]>;
+  sectors: ByLang<string[]>;
+  skills: ByLang<string[]>;
+  why: ByLang<Reason[]>;
+  clients: ByLang<string[]>;
+  portals: ByLang<Portal[]>;
+} = {
   expertises: {
     fr: [
       { title: 'Finance durable, ESG & RSE', items: ["Stratégies et plans d'actions ESG et RSE", 'Reporting ESG et RSE', 'Certification ESG', 'Finance verte, climat et durable', 'Taxonomie verte', 'Évaluation et cartographie des risques ESG', 'Stratégie et mise en œuvre RSE', 'Accompagnement aux normes internationales RSE et ESG'], note: "Les normes ESG et la finance durable deviennent des éléments centraux de la gouvernance et de l'accès aux financements dans les marchés africains et internationaux." },
@@ -155,156 +168,3 @@ const DATA = {
     ],
   },
 };
-
-/* ---------- Helpers DOM ---------- */
-const $ = (sel, root = document) => root.querySelector(sel);
-const el = (tag, cls, text) => {
-  const node = document.createElement(tag);
-  if (cls) node.className = cls;
-  if (text != null) node.textContent = text;
-  return node;
-};
-
-let currentLang = 'fr';
-let openExpertise = -1; // index de l'expertise ouverte, -1 = aucune
-
-/* ---------- Rendu du texte statique (data-i18n) ---------- */
-function renderText() {
-  const t = I18N[currentLang];
-  document.querySelectorAll('[data-i18n]').forEach(node => {
-    const key = node.getAttribute('data-i18n');
-    if (t[key] == null) return;
-    // Les <label> contiennent un champ de formulaire : ne remplacer que le libellé,
-    // pas le contrôle enfant.
-    const control = node.querySelector('input, textarea, select');
-    if (control) {
-      // premier nœud texte = libellé
-      let labelNode = [...node.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
-      if (!labelNode) { labelNode = document.createTextNode(''); node.insertBefore(labelNode, node.firstChild); }
-      labelNode.textContent = t[key];
-    } else {
-      node.textContent = t[key];
-    }
-  });
-  document.documentElement.lang = currentLang;
-  $('#langToggle').textContent = currentLang === 'fr' ? 'EN' : 'FR';
-}
-
-/* ---------- Rendu des listes dynamiques ---------- */
-function renderLists() {
-  const t = I18N[currentLang];
-
-  // Valeurs
-  const valuesGrid = $('#valuesGrid');
-  valuesGrid.replaceChildren(...DATA.values[currentLang].map(v => {
-    const cell = el('div', 'value-cell');
-    cell.append(el('span', 'v-name', v.name), el('span', 'v-desc', v.desc));
-    return cell;
-  }));
-
-  // Secteurs
-  $('#sectTags').replaceChildren(...DATA.sectors[currentLang].map(s => el('span', 'sect-tag', s)));
-
-  // Compétences du fondateur
-  $('#founderSkills').replaceChildren(...DATA.skills[currentLang].map(s => el('span', 'founder-skill', s)));
-
-  // Pourquoi nous
-  $('#whyGrid').replaceChildren(...DATA.why[currentLang].map((w, i) => {
-    const card = el('div', 'why-card');
-    card.append(
-      el('span', 'why-num', '0' + (i + 1)),
-      el('span', 'why-title', w.title),
-      el('span', 'why-desc', w.desc),
-    );
-    return card;
-  }));
-
-  // Clients cibles
-  $('#clientsTags').replaceChildren(...DATA.clients[currentLang].map(c => el('span', 'client-tag', c)));
-
-  // Portails / ressources
-  $('#portalsGrid').replaceChildren(...DATA.portals[currentLang].map(p => {
-    const card = el('div', 'portal-card');
-    const ul = el('ul');
-    p.items.forEach(it => {
-      const li = el('li');
-      li.append(el('span', 'dash', '—'), el('span', null, it));
-      ul.append(li);
-    });
-    card.append(el('span', 'portal-roman', p.roman), el('span', 'portal-title', p.title), ul, el('div', 'portal-spacer'), el('span', 'portal-soon', t.resSoon));
-    return card;
-  }));
-
-  renderExpertises();
-}
-
-/* ---------- Accordéon des expertises ---------- */
-function renderExpertises() {
-  const list = $('#expList');
-  list.replaceChildren(...DATA.expertises[currentLang].map((ex, i) => {
-    const item = el('div', 'exp-item');
-    if (i === openExpertise) item.classList.add('open');
-
-    const btn = el('button', 'exp-trigger');
-    btn.type = 'button';
-    btn.setAttribute('aria-expanded', i === openExpertise ? 'true' : 'false');
-    btn.append(
-      el('span', 'exp-num', String(i + 1).padStart(2, '0')),
-      el('span', 'exp-name', ex.title),
-      el('span', 'exp-chevron', '+'),
-    );
-    btn.addEventListener('click', () => {
-      openExpertise = (openExpertise === i) ? -1 : i;
-      renderExpertises();
-    });
-
-    const panel = el('div', 'exp-panel');
-    const grid = el('div', 'exp-panel-items');
-    ex.items.forEach(it => {
-      const line = el('div', 'exp-line');
-      line.append(el('span', 'dash', '—'), el('span', null, it));
-      grid.append(line);
-    });
-    panel.append(grid);
-    if (ex.note) panel.append(el('p', 'exp-note', ex.note));
-
-    item.append(btn, panel);
-    return item;
-  }));
-}
-
-/* ---------- Interactions ---------- */
-function initInteractions() {
-  // Bascule de langue
-  $('#langToggle').addEventListener('click', () => {
-    currentLang = currentLang === 'fr' ? 'en' : 'fr';
-    renderText();
-    renderLists();
-  });
-
-  // Menu mobile
-  const burger = $('#navBurger');
-  const links = $('#navLinks');
-  burger.addEventListener('click', () => {
-    const open = links.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    links.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-  }));
-
-  // Formulaire de contact
-  const form = $('#contactForm');
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    form.classList.add('sent');
-  });
-}
-
-/* ---------- Boot ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  renderText();
-  renderLists();
-  initInteractions();
-});
