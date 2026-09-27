@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cabinet Safiou Radji — Conseil Stratégique · Finance · Investissement · Développement Durable</title>
+  <meta name="description" content="Cabinet indépendant de conseil stratégique, financier et organisationnel — finance durable, gouvernance, investissement et transformation des organisations en Afrique.">
+  <link rel="icon" type="image/png" href="assets/logo-csr.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ══════════ NAV ══════════ -->
+  <header class="site-header">
+    <nav class="nav">
+      <a href="#accueil" class="brand">
+        <img src="assets/logo-csr.png" alt="Cabinet Safiou Radji">
+        <span>CABINET SAFIOU RADJI</span>
+      </a>
+      <div class="nav-spacer"></div>
+      <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#cabinet" class="navlink" data-i18n="navCabinet"></a>
+        <a href="#expertises" class="navlink" data-i18n="navExpertises"></a>
+        <a href="#secteurs" class="navlink" data-i18n="navSecteurs"></a>
+        <a href="#fondateur" class="navlink" data-i18n="navFondateur"></a>
+        <a href="#ressources" class="navlink" data-i18n="navRessources"></a>
+        <a href="#contact" class="btn-contact">Contact</a>
+        <button class="lang-toggle" id="langToggle"></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section id="accueil" class="hero">
+    <img src="assets/logo-csr.png" alt="" class="hero-watermark">
+    <div class="hero-inner">
+      <div class="hero-frame fade-up">
+        <div class="kicker" data-i18n="heroKicker"></div>
+        <h1 data-i18n="heroTitle"></h1>
+        <p class="hero-tagline" data-i18n="heroTagline"></p>
+        <div class="hero-pillars">
+          <span data-i18n="pillar1"></span><span class="dot">·</span>
+          <span data-i18n="pillar2"></span><span class="dot">·</span>
+          <span data-i18n="pillar3"></span><span class="dot">·</span>
+          <span data-i18n="pillar4"></span>
+        </div>
+        <p class="hero-sub" data-i18n="heroSub"></p>
+        <div class="hero-cta">
+          <a href="#expertises" class="btn btn-solid" data-i18n="heroCta1"></a>
+          <a href="#contact" class="btn btn-ghost" data-i18n="heroCta2"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ QUI SOMMES-NOUS / VISION / MISSION ══════════ -->
+  <section id="cabinet">
+    <div class="cabinet-stack">
+      <div class="cabinet-grid">
+        <div class="cabinet-copy">
+          <div class="kicker" data-i18n="whoKicker"></div>
+          <h2 data-i18n="whoTitle"></h2>
+          <p data-i18n="whoText"></p>
+          <p data-i18n="whoZone"></p>
+        </div>
+        <div class="vm-card">
+          <div>
+            <div class="vm-label" data-i18n="visionLabel"></div>
+            <p data-i18n="visionText"></p>
+          </div>
+          <div>
+            <div class="vm-label" data-i18n="missionLabel"></div>
+            <p data-i18n="missionText"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Valeurs -->
+      <div class="values-block">
+        <div class="divider-row">
+          <div class="kicker" data-i18n="valuesKicker"></div>
+          <span class="rule"></span>
+        </div>
+        <div class="values-grid" id="valuesGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ EXPERTISES ══════════ -->
+  <section id="expertises" class="section">
+    <div class="wrap">
+      <div class="exp-head">
+        <div class="exp-title-wrap">
+          <div class="kicker" data-i18n="expKicker"></div>
+          <h2 data-i18n="expTitle"></h2>
+        </div>
+        <p class="exp-hint" data-i18n="expHint"></p>
+      </div>
+      <div class="exp-list" id="expList"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ SECTEURS ══════════ -->
+  <section id="secteurs" class="section-band">
+    <div class="sect-grid">
+      <div class="sect-copy">
+        <div class="kicker" data-i18n="sectKicker"></div>
+        <h2 data-i18n="sectTitle"></h2>
+        <p data-i18n="sectSub"></p>
+      </div>
+      <div class="sect-tags" id="sectTags"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ FONDATEUR ══════════ -->
+  <section id="fondateur" class="section">
+    <div class="founder-grid">
+      <div class="founder-photo">
+        <img src="assets/logo-csr.png" alt="">
+        <span data-i18n="photoPlaceholder"></span>
+      </div>
+      <div class="founder-copy">
+        <div class="kicker" data-i18n="founderKicker"></div>
+        <h2>Safiou Radji</h2>
+        <div class="founder-role" data-i18n="founderRole"></div>
+        <p class="founder-bio" data-i18n="founderBio"></p>
+        <div class="founder-skills" id="founderSkills"></div>
+        <p class="founder-conf" data-i18n="founderConf"></p>
+      </div>
+    </div>
+    <div class="founder-quote-wrap">
+      <span class="founder-quote-mark">“</span>
+      <blockquote class="founder-quote" data-i18n="founderQuote"></blockquote>
+      <div class="founder-sign">
+        <span class="line"></span>
+        <span>Safiou Radji</span>
+        <span class="line"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ POURQUOI NOUS ══════════ -->
+  <section id="pourquoi" class="section-band">
+    <div class="wrap">
+      <div class="section-head-center">
+        <div class="kicker" data-i18n="whyKicker"></div>
+        <h2 data-i18n="whyTitle"></h2>
+      </div>
+      <div class="why-grid" id="whyGrid"></div>
+
+      <!-- Clients cibles -->
+      <div class="clients-block">
+        <div class="divider-row">
+          <div class="kicker" data-i18n="clientsKicker"></div>
+          <span class="rule"></span>
+        </div>
+        <div class="clients-tags" id="clientsTags"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ RESSOURCES ══════════ -->
+  <section id="ressources" class="section">
+    <div class="wrap">
+      <div class="section-head-center">
+        <div class="kicker" data-i18n="resKicker"></div>
+        <h2 data-i18n="resTitle"></h2>
+      </div>
+      <div class="portals-grid" id="portalsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <section id="contact" class="contact">
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <div class="kicker">Contact</div>
+        <h2 data-i18n="contactTitle"></h2>
+        <p data-i18n="contactSub"></p>
+        <div class="contact-details">
+          <div class="contact-row"><span class="lbl" data-i18n="labelSiege"></span><span class="val" data-i18n="toBeConfirmed"></span></div>
+          <div class="contact-row"><span class="lbl" data-i18n="labelPhone"></span><span class="val" data-i18n="toBeConfirmed"></span></div>
+          <div class="contact-row"><span class="lbl">E-mail</span><span class="val" data-i18n="toBeConfirmed"></span></div>
+          <div class="contact-row">
+            <span class="lbl" data-i18n="labelSocial"></span>
+            <div class="contact-social">
+              <span>LinkedIn</span><span>·</span><span>Facebook</span><span>·</span><span>X</span><span>·</span><span>YouTube</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="contact-fields">
+          <label data-i18n="formName">
+            <input type="text" name="name" autocomplete="name">
+          </label>
+          <label data-i18n="formOrg">
+            <input type="text" name="org" autocomplete="organization">
+          </label>
+          <label>E-mail
+            <input type="email" name="email" autocomplete="email">
+          </label>
+          <label data-i18n="formMsg">
+            <textarea name="msg" rows="4"></textarea>
+          </label>
+          <button type="submit" class="btn-send" data-i18n="formSend"></button>
+        </div>
+        <div class="contact-thanks">
+          <span class="thanks-title" data-i18n="formThanks"></span>
+          <span class="thanks-sub" data-i18n="formThanksSub"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo-csr.png" alt="">
+        <span>CABINET SAFIOU RADJI</span>
+      </div>
+      <span class="footer-slogan" data-i18n="footerSlogan"></span>
+      <span class="footer-copy">© 2026 Cabinet Safiou Radji</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

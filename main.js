@@ -1,0 +1,310 @@
+/* ============================================================
+   Cabinet Safiou Radji — logique du site
+   - Bilingue FR / EN (par défaut FR)
+   - Rendu des listes (valeurs, expertises, secteurs, etc.)
+   - Accordéon des expertises
+   - Formulaire de contact (état « envoyé »)
+   ============================================================ */
+
+/* ---------- Contenu textuel ---------- */
+const I18N = {
+  fr: {
+    navCabinet: 'Le cabinet', navExpertises: 'Expertises', navSecteurs: 'Secteurs', navFondateur: 'Fondateur', navRessources: 'Ressources',
+    heroKicker: 'Cabinet Safiou Radji',
+    heroTitle: "L'Excellence Financière au Service de la Performance Durable",
+    heroTagline: 'Notre Expertise au Service de Votre Excellente Maîtrise',
+    pillar1: 'Conseil stratégique', pillar2: 'Finance', pillar3: 'Investissement', pillar4: 'Développement durable',
+    heroSub: "Nous accompagnons les entreprises, institutions financières, gouvernements, organisations internationales et investisseurs dans la conception et la mise en œuvre de stratégies créatrices de valeur durable.",
+    heroCta1: 'Nos expertises', heroCta2: 'Nous contacter',
+    whoKicker: 'Qui sommes-nous', whoTitle: 'Un cabinet indépendant de conseil stratégique, financier et organisationnel',
+    whoText: "Le Cabinet Safiou Radji intervient auprès des entreprises, institutions publiques, organisations internationales, investisseurs et partenaires techniques et financiers. Notre vocation : aider les organisations à structurer leur croissance, renforcer leur gouvernance, mobiliser des financements, améliorer leur performance, intégrer les enjeux ESG et développer des projets à fort impact économique et social.",
+    whoZone: "Le cabinet intervient principalement en Afrique de l'Ouest, en Afrique Centrale et auprès de partenaires internationaux.",
+    visionLabel: 'Notre vision', visionText: "Être le cabinet de référence en Afrique francophone dans le domaine du conseil stratégique, de la finance durable, de l'investissement et de la transformation des organisations.",
+    missionLabel: 'Notre mission', missionText: "Accompagner les organisations publiques et privées dans la création de valeur, l'amélioration de leur performance, la mobilisation de financements, la transformation durable, le développement de projets structurants et la mise en œuvre des meilleures pratiques de gouvernance.",
+    valuesKicker: 'Nos valeurs',
+    expKicker: 'Nos domaines', expTitle: "Six domaines d'expertise", expHint: 'Cliquez sur un domaine pour le détailler',
+    sectKicker: "Secteurs d'intervention", sectTitle: 'Une connaissance fine des secteurs qui transforment l’Afrique',
+    sectSub: 'De la mine aux infrastructures, de la banque aux collectivités territoriales.',
+    founderKicker: 'Notre fondateur', founderRole: 'Fondateur & Directeur Général · Expert-comptable · 30 ans d’expérience de haut niveau',
+    founderBio: "Expert-comptable, consultant international et spécialiste de la finance durable, Safiou Radji possède une expertise reconnue dans les domaines de la finance, de la gouvernance, de l'investissement, du développement durable et de la transformation des organisations.",
+    founderConf: "Il intervient régulièrement dans des conférences, séminaires et programmes de formation consacrés aux enjeux de la finance durable, des indicateurs ESG, de la gouvernance et de la transformation financière.",
+    founderQuote: "Dans un environnement économique en constante évolution, les organisations ont besoin d'un accompagnement stratégique, financier et humain capable de transformer les défis en opportunités. Notre ambition est de mettre notre expertise au service de la performance durable et de l'impact positif.",
+    photoPlaceholder: 'Photo à fournir',
+    whyKicker: 'Pourquoi nous choisir', whyTitle: 'Cinq raisons de travailler avec le cabinet',
+    clientsKicker: 'Nos clients cibles',
+    resKicker: 'Ressources & Programmes', resTitle: 'Publications, Académie, Investisseurs, Actualités', resSoon: 'Prochainement',
+    contactTitle: 'Parlons de vos enjeux',
+    contactSub: 'Décrivez-nous votre besoin — nous revenons vers vous rapidement pour un premier échange confidentiel.',
+    labelSiege: 'Siège', labelPhone: 'Téléphone', labelSocial: 'Réseaux', toBeConfirmed: 'À préciser',
+    formName: 'Nom complet', formOrg: 'Organisation', formMsg: 'Votre message', formSend: 'Envoyer',
+    formThanks: 'Merci pour votre message', formThanksSub: 'Nous vous répondrons dans les plus brefs délais.',
+    footerSlogan: '« Structurer aujourd’hui les organisations qui réussiront demain »',
+  },
+  en: {
+    navCabinet: 'The firm', navExpertises: 'Expertise', navSecteurs: 'Sectors', navFondateur: 'Founder', navRessources: 'Resources',
+    heroKicker: 'Cabinet Safiou Radji',
+    heroTitle: 'Financial Excellence in the Service of Sustainable Performance',
+    heroTagline: 'Our Expertise in the Service of Your Excellent Mastery',
+    pillar1: 'Strategic advisory', pillar2: 'Finance', pillar3: 'Investment', pillar4: 'Sustainable development',
+    heroSub: 'We support companies, financial institutions, governments, international organisations and investors in designing and implementing strategies that create sustainable value.',
+    heroCta1: 'Our expertise', heroCta2: 'Contact us',
+    whoKicker: 'Who we are', whoTitle: 'An independent strategic, financial and organisational advisory firm',
+    whoText: 'Cabinet Safiou Radji works with companies, public institutions, international organisations, investors and technical and financial partners. Our vocation: helping organisations structure their growth, strengthen their governance, mobilise financing, improve their performance, integrate ESG issues and develop projects with strong economic and social impact.',
+    whoZone: 'The firm operates mainly in West Africa, Central Africa and with international partners.',
+    visionLabel: 'Our vision', visionText: 'To be the reference firm in French-speaking Africa for strategic advisory, sustainable finance, investment and organisational transformation.',
+    missionLabel: 'Our mission', missionText: 'Supporting public and private organisations in value creation, performance improvement, financing mobilisation, sustainable transformation, the development of structuring projects and the implementation of governance best practices.',
+    valuesKicker: 'Our values',
+    expKicker: 'Our domains', expTitle: 'Six areas of expertise', expHint: 'Click a domain to expand it',
+    sectKicker: 'Sectors', sectTitle: 'Deep knowledge of the sectors transforming Africa',
+    sectSub: 'From mining to infrastructure, from banking to local governments.',
+    founderKicker: 'Our founder', founderRole: 'Founder & CEO · Chartered accountant · 30 years of senior experience',
+    founderBio: 'Chartered accountant, international consultant and sustainable finance specialist, Safiou Radji has recognised expertise in finance, governance, investment, sustainable development and organisational transformation.',
+    founderConf: 'He regularly speaks at conferences, seminars and training programmes on sustainable finance, ESG indicators, governance and financial transformation.',
+    founderQuote: 'In a constantly evolving economic environment, organisations need strategic, financial and human support capable of turning challenges into opportunities. Our ambition is to put our expertise at the service of sustainable performance and positive impact.',
+    photoPlaceholder: 'Photo to be provided',
+    whyKicker: 'Why choose us', whyTitle: 'Five reasons to work with the firm',
+    clientsKicker: 'Our target clients',
+    resKicker: 'Resources & Programmes', resTitle: 'Publications, Academy, Investors, News', resSoon: 'Coming soon',
+    contactTitle: 'Let’s discuss your challenges',
+    contactSub: 'Tell us about your needs — we will get back to you promptly for a confidential first exchange.',
+    labelSiege: 'Head office', labelPhone: 'Phone', labelSocial: 'Social', toBeConfirmed: 'To be confirmed',
+    formName: 'Full name', formOrg: 'Organisation', formMsg: 'Your message', formSend: 'Send',
+    formThanks: 'Thank you for your message', formThanksSub: 'We will get back to you shortly.',
+    footerSlogan: '“Structuring today the organisations that will succeed tomorrow”',
+  },
+};
+
+/* ---------- Données par langue ---------- */
+const DATA = {
+  expertises: {
+    fr: [
+      { title: 'Finance durable, ESG & RSE', items: ["Stratégies et plans d'actions ESG et RSE", 'Reporting ESG et RSE', 'Certification ESG', 'Finance verte, climat et durable', 'Taxonomie verte', 'Évaluation et cartographie des risques ESG', 'Stratégie et mise en œuvre RSE', 'Accompagnement aux normes internationales RSE et ESG'], note: "Les normes ESG et la finance durable deviennent des éléments centraux de la gouvernance et de l'accès aux financements dans les marchés africains et internationaux." },
+      { title: 'Stratégie & Gouvernance', items: ['Planification stratégique', "Élaboration de plans d'affaires", "Gouvernance d'entreprise", 'Gestion du changement', 'Restructuration organisationnelle', 'Transformation institutionnelle'] },
+      { title: 'Finance & Investissement', items: ['Expertise-comptable', 'Commissariat aux comptes', 'Structuration et modélisation financières', 'Levée de fonds', 'Business plans', 'Études de rentabilité', 'Due diligence', "Évaluation d'entreprises", 'Ingénierie financière'] },
+      { title: 'Formation & Renforcement des capacités', items: ['Comptabilité', "Finance durable et investissement d'impact", 'Audits (audit légal, interne et opérationnel)', 'Contrôle interne et contrôle de gestion', 'Restructuration des fonctions', 'Gouvernance', 'Leadership', 'Art oratoire et confiance en soi', 'Développement durable', 'Gestion des risques', 'Transformation digitale', 'Accompagnement à la montée en puissance de l’IA', 'Développement personnel ou professionnel'] },
+      { title: 'Conseil aux institutions & bailleurs', items: ['Conseil Présidence et Gouvernement', 'Assistance technique & renforcement institutionnel', 'Gouvernance des projets et gestion axée sur les résultats', 'Suivi-évaluation'] },
+      { title: 'Gestion de projets', items: ['Études de faisabilité', 'Montage de projets', 'Pilotage de projets', 'Audit de projet', 'Stratégie et gestion de Guichet Diaspora', 'Gestion de programmes', "Assistance à maîtrise d'ouvrage", 'Recherche de financement', 'Partenariats Public-Privé'] },
+    ],
+    en: [
+      { title: 'Sustainable finance, ESG & CSR', items: ['ESG and CSR strategies and action plans', 'ESG and CSR reporting', 'ESG certification', 'Green, climate and sustainable finance', 'Green taxonomy', 'ESG risk assessment and mapping', 'CSR strategy and implementation', 'Support for international CSR and ESG standards'], note: 'ESG standards and sustainable finance are becoming central to governance and access to financing in African and international markets.' },
+      { title: 'Strategy & Governance', items: ['Strategic planning', 'Business plan development', 'Corporate governance', 'Change management', 'Organisational restructuring', 'Institutional transformation'] },
+      { title: 'Finance & Investment', items: ['Chartered accountancy', 'Statutory audit', 'Financial structuring and modelling', 'Fundraising', 'Business plans', 'Profitability studies', 'Due diligence', 'Business valuation', 'Financial engineering'] },
+      { title: 'Training & Capacity building', items: ['Accounting', 'Sustainable finance and impact investing', 'Audits (statutory, internal and operational)', 'Internal control and management control', 'Function restructuring', 'Governance', 'Leadership', 'Public speaking and self-confidence', 'Sustainable development', 'Risk management', 'Digital transformation', 'Support for AI adoption and scale-up', 'Personal or professional development'] },
+      { title: 'Advisory to institutions & donors', items: ['Advisory to Presidencies and Governments', 'Technical assistance & institutional strengthening', 'Project governance and results-based management', 'Monitoring and evaluation'] },
+      { title: 'Project management', items: ['Feasibility studies', 'Project design', 'Project steering', 'Project audit', 'Diaspora Desk strategy and management', 'Programme management', "Owner's engineering assistance", 'Financing sourcing', 'Public-Private partnerships'] },
+    ],
+  },
+  values: {
+    fr: [
+      { name: 'Excellence', desc: 'Recherche permanente de qualité.' },
+      { name: 'Intégrité', desc: 'Respect des principes éthiques.' },
+      { name: 'Innovation', desc: 'Solutions adaptées aux défis actuels.' },
+      { name: 'Impact', desc: 'Résultats mesurables et durables.' },
+      { name: 'Engagement', desc: 'Accompagnement de proximité.' },
+      { name: 'Responsabilité', desc: 'Création de valeur économique, sociale et environnementale.' },
+    ],
+    en: [
+      { name: 'Excellence', desc: 'A constant pursuit of quality.' },
+      { name: 'Integrity', desc: 'Respect for ethical principles.' },
+      { name: 'Innovation', desc: 'Solutions adapted to today’s challenges.' },
+      { name: 'Impact', desc: 'Measurable, lasting results.' },
+      { name: 'Commitment', desc: 'Close, hands-on support.' },
+      { name: 'Responsibility', desc: 'Economic, social and environmental value creation.' },
+    ],
+  },
+  sectors: {
+    fr: ['Mines', 'Énergie', 'Agriculture', 'Agro-industrie', 'Banque', 'Assurance', 'Microfinance', 'Santé', 'Éducation', 'Infrastructures', 'PME-PMI', 'Collectivités territoriales', 'Organisations internationales'],
+    en: ['Mining', 'Energy', 'Agriculture', 'Agro-industry', 'Banking', 'Insurance', 'Microfinance', 'Health', 'Education', 'Infrastructure', 'SMEs', 'Local governments', 'International organisations'],
+  },
+  skills: {
+    fr: ['Expertise comptable', 'Audit financier', 'Conseil stratégique', 'Structuration financière', 'Développement durable', "Gouvernance d'entreprise", 'Évaluation de projets', 'Formation professionnelle', 'Mobilisation des investissements'],
+    en: ['Chartered accountancy', 'Financial audit', 'Strategic advisory', 'Financial structuring', 'Sustainable development', 'Corporate governance', 'Project evaluation', 'Professional training', 'Investment mobilisation'],
+  },
+  why: {
+    fr: [
+      { title: 'Une expertise multidisciplinaire', desc: 'Finance, stratégie, gouvernance et développement durable.' },
+      { title: 'Une vision internationale', desc: 'Compréhension des standards internationaux et des réalités africaines.' },
+      { title: 'Une approche orientée résultats', desc: 'Solutions concrètes et opérationnelles.' },
+      { title: 'Une forte expertise ESG', desc: 'Accompagnement des organisations dans leur transition durable.' },
+      { title: 'Un réseau de partenaires', desc: 'Experts, investisseurs, institutions financières et organismes de développement.' },
+    ],
+    en: [
+      { title: 'Multidisciplinary expertise', desc: 'Finance, strategy, governance and sustainable development.' },
+      { title: 'An international outlook', desc: 'Understanding of international standards and African realities.' },
+      { title: 'A results-driven approach', desc: 'Concrete, operational solutions.' },
+      { title: 'Strong ESG expertise', desc: 'Supporting organisations through their sustainable transition.' },
+      { title: 'A network of partners', desc: 'Experts, investors, financial institutions and development bodies.' },
+    ],
+  },
+  clients: {
+    fr: ['États et gouvernements', 'Agences publiques', 'Institutions financières', 'Banques', 'Assurances', "Fonds d'investissement", 'PME et grandes entreprises', 'ONG internationales', 'Organisations régionales', 'Partenaires techniques et financiers'],
+    en: ['States and governments', 'Public agencies', 'Financial institutions', 'Banks', 'Insurance companies', 'Investment funds', 'SMEs and large companies', 'International NGOs', 'Regional organisations', 'Technical and financial partners'],
+  },
+  portals: {
+    fr: [
+      { roman: 'I', title: 'Espace Publications', items: ['Articles — finance durable, gouvernance, ESG, fiscalité', 'Analyses sectorielles et rapports de recherche', 'Notes de plaidoyer', 'Guides pratiques, livres blancs et outils de gestion'] },
+      { roman: 'II', title: 'Académie Safiou Radji', items: ['Certificats professionnels', 'Masterclass et webinaires', 'Séminaires et congrès', 'Formations intra-entreprises'] },
+      { roman: 'III', title: 'Espace Investisseurs & Projets', items: ["Opportunités d'investissement", 'Projets structurants et PPP', 'Projets miniers, énergie, agriculture', 'Infrastructures'] },
+      { roman: 'IV', title: 'Actualités & Médias', items: ['Interviews et conférences', 'Publications et distinctions', 'Interventions internationales', 'Événements professionnels'] },
+    ],
+    en: [
+      { roman: 'I', title: 'Publications', items: ['Articles — sustainable finance, governance, ESG, taxation', 'Sector analyses and research reports', 'Advocacy notes', 'Practical guides, white papers and management tools'] },
+      { roman: 'II', title: 'Safiou Radji Academy', items: ['Professional certificates', 'Masterclasses and webinars', 'Seminars and congresses', 'In-company training'] },
+      { roman: 'III', title: 'Investors & Projects', items: ['Investment opportunities', 'Structuring projects and PPPs', 'Mining, energy, agriculture projects', 'Infrastructure'] },
+      { roman: 'IV', title: 'News & Media', items: ['Interviews and conferences', 'Publications and awards', 'International engagements', 'Professional events'] },
+    ],
+  },
+};
+
+/* ---------- Helpers DOM ---------- */
+const $ = (sel, root = document) => root.querySelector(sel);
+const el = (tag, cls, text) => {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text != null) node.textContent = text;
+  return node;
+};
+
+let currentLang = 'fr';
+let openExpertise = -1; // index de l'expertise ouverte, -1 = aucune
+
+/* ---------- Rendu du texte statique (data-i18n) ---------- */
+function renderText() {
+  const t = I18N[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(node => {
+    const key = node.getAttribute('data-i18n');
+    if (t[key] == null) return;
+    // Les <label> contiennent un champ de formulaire : ne remplacer que le libellé,
+    // pas le contrôle enfant.
+    const control = node.querySelector('input, textarea, select');
+    if (control) {
+      // premier nœud texte = libellé
+      let labelNode = [...node.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+      if (!labelNode) { labelNode = document.createTextNode(''); node.insertBefore(labelNode, node.firstChild); }
+      labelNode.textContent = t[key];
+    } else {
+      node.textContent = t[key];
+    }
+  });
+  document.documentElement.lang = currentLang;
+  $('#langToggle').textContent = currentLang === 'fr' ? 'EN' : 'FR';
+}
+
+/* ---------- Rendu des listes dynamiques ---------- */
+function renderLists() {
+  const t = I18N[currentLang];
+
+  // Valeurs
+  const valuesGrid = $('#valuesGrid');
+  valuesGrid.replaceChildren(...DATA.values[currentLang].map(v => {
+    const cell = el('div', 'value-cell');
+    cell.append(el('span', 'v-name', v.name), el('span', 'v-desc', v.desc));
+    return cell;
+  }));
+
+  // Secteurs
+  $('#sectTags').replaceChildren(...DATA.sectors[currentLang].map(s => el('span', 'sect-tag', s)));
+
+  // Compétences du fondateur
+  $('#founderSkills').replaceChildren(...DATA.skills[currentLang].map(s => el('span', 'founder-skill', s)));
+
+  // Pourquoi nous
+  $('#whyGrid').replaceChildren(...DATA.why[currentLang].map((w, i) => {
+    const card = el('div', 'why-card');
+    card.append(
+      el('span', 'why-num', '0' + (i + 1)),
+      el('span', 'why-title', w.title),
+      el('span', 'why-desc', w.desc),
+    );
+    return card;
+  }));
+
+  // Clients cibles
+  $('#clientsTags').replaceChildren(...DATA.clients[currentLang].map(c => el('span', 'client-tag', c)));
+
+  // Portails / ressources
+  $('#portalsGrid').replaceChildren(...DATA.portals[currentLang].map(p => {
+    const card = el('div', 'portal-card');
+    const ul = el('ul');
+    p.items.forEach(it => {
+      const li = el('li');
+      li.append(el('span', 'dash', '—'), el('span', null, it));
+      ul.append(li);
+    });
+    card.append(el('span', 'portal-roman', p.roman), el('span', 'portal-title', p.title), ul, el('div', 'portal-spacer'), el('span', 'portal-soon', t.resSoon));
+    return card;
+  }));
+
+  renderExpertises();
+}
+
+/* ---------- Accordéon des expertises ---------- */
+function renderExpertises() {
+  const list = $('#expList');
+  list.replaceChildren(...DATA.expertises[currentLang].map((ex, i) => {
+    const item = el('div', 'exp-item');
+    if (i === openExpertise) item.classList.add('open');
+
+    const btn = el('button', 'exp-trigger');
+    btn.type = 'button';
+    btn.setAttribute('aria-expanded', i === openExpertise ? 'true' : 'false');
+    btn.append(
+      el('span', 'exp-num', String(i + 1).padStart(2, '0')),
+      el('span', 'exp-name', ex.title),
+      el('span', 'exp-chevron', '+'),
+    );
+    btn.addEventListener('click', () => {
+      openExpertise = (openExpertise === i) ? -1 : i;
+      renderExpertises();
+    });
+
+    const panel = el('div', 'exp-panel');
+    const grid = el('div', 'exp-panel-items');
+    ex.items.forEach(it => {
+      const line = el('div', 'exp-line');
+      line.append(el('span', 'dash', '—'), el('span', null, it));
+      grid.append(line);
+    });
+    panel.append(grid);
+    if (ex.note) panel.append(el('p', 'exp-note', ex.note));
+
+    item.append(btn, panel);
+    return item;
+  }));
+}
+
+/* ---------- Interactions ---------- */
+function initInteractions() {
+  // Bascule de langue
+  $('#langToggle').addEventListener('click', () => {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    renderText();
+    renderLists();
+  });
+
+  // Menu mobile
+  const burger = $('#navBurger');
+  const links = $('#navLinks');
+  burger.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Formulaire de contact
+  const form = $('#contactForm');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    form.classList.add('sent');
+  });
+}
+
+/* ---------- Boot ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  renderText();
+  renderLists();
+  initInteractions();
+});
